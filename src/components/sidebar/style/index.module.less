@@ -1,0 +1,29 @@
+.side-bar-wrapper{
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.side-bar-fold-status{
+  width: @foldSideBarWidth;
+}
+
+.side-bar-unfold-status{
+  width: @sideBarWidth;
+}
+
+.side-bar-light-theme{
+  background-color: #fff;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.side-bar-dark-theme {
+  background-color: #001529;
+  box-shadow: 0 2px 12px 0 #595959;
+}

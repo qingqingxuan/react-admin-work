@@ -6,6 +6,9 @@ const LOGOUT_ACTION = "LOGOUT";
 export interface IUserInfo {
   userId: string | number;
   userName: string;
+  nickName: string;
+  roleId: number;
+  token: string;
   isLogined: boolean;
 }
 
@@ -17,6 +20,9 @@ export interface IUserInfoAction {
 export const initUserInfo: IUserInfo = {
   userName: "",
   userId: "",
+  nickName: "",
+  roleId: 0,
+  token: "",
   isLogined: false,
 };
 
@@ -33,11 +39,13 @@ export const logoutAction = () => ({
 export const userInfoReducer = (state: IUserInfo, action: IUserInfoAction) => {
   switch (action.type) {
     case SAVE_INFO_ACTION:
-      return {
+      const mergeData = {
         ...state,
         ...(action.payload ?? {}),
         isLogined: true,
       };
+      localStorage.setItem("user-info", JSON.stringify(mergeData));
+      return mergeData;
     case LOGOUT_ACTION:
       return {
         ...action.payload,

@@ -25,9 +25,10 @@ const Login: React.FC = () => {
           roleId: data.roleId,
           userId: data.userId,
           token: data.token,
+          isLogined: true,
         })
       );
-      navigate("/", { replace: true });
+      navigate("/test", { replace: true });
     }
   }
   return (

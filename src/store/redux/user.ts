@@ -14,19 +14,25 @@ export interface IUserInfo {
 
 export interface IUserInfoAction {
   type: string;
-  payload: Partial<IUserInfo>;
+  payload: IUserInfo;
 }
 
-export const initUserInfo: IUserInfo = {
-  userName: "",
-  userId: "",
-  nickName: "",
-  roleId: 0,
-  token: "",
-  isLogined: false,
-};
+function getDefaultUserInfo() {
+  const localUserInfo = localStorage.getItem("user-info");
+  const originInfo = {
+    userId: "",
+    userName: "",
+    nickName: "",
+    roleId: 0,
+    token: "",
+    isLogined: false,
+  };
+  return localUserInfo ? JSON.parse(localUserInfo || "{}") : originInfo;
+}
 
-export const saveInfoAction = (state: Partial<IUserInfo>) => ({
+export const initUserInfo: IUserInfo = getDefaultUserInfo();
+
+export const saveInfoAction = (state: IUserInfo) => ({
   type: SAVE_INFO_ACTION,
   payload: state,
 });
@@ -39,10 +45,9 @@ export const logoutAction = () => ({
 export const userInfoReducer = (state: IUserInfo, action: IUserInfoAction) => {
   switch (action.type) {
     case SAVE_INFO_ACTION:
-      const mergeData = {
+      const mergeData: IUserInfo = {
         ...state,
         ...(action.payload ?? {}),
-        isLogined: true,
       };
       localStorage.setItem("user-info", JSON.stringify(mergeData));
       return mergeData;

@@ -10,14 +10,14 @@ export interface HttpOption {
   afterRequest?: () => void;
 }
 
-export interface Response {
+export interface Response<T = any> {
   totalSize: number | 0;
   code: number;
   msg: string;
-  data: any;
+  data: T;
 }
 
-function http({
+function http<T>({
   url,
   data,
   method,
@@ -25,13 +25,13 @@ function http({
   beforeRequest,
   afterRequest,
 }: HttpOption) {
-  const successHandler = (res: AxiosResponse<Response>) => {
+  const successHandler = (res: AxiosResponse<Response<T>>) => {
     if (res.data.code === 200) {
       return res.data;
     }
     throw new Error(res.data.msg || "请求失败，未知异常");
   };
-  const failHandler = (error: Response) => {
+  const failHandler = (error: Response<Error>) => {
     afterRequest && afterRequest();
     throw new Error(error.msg || "请求失败，未知异常");
   };
@@ -48,13 +48,13 @@ function http({
         .then(successHandler, failHandler);
 }
 
-export function get({
+export function get<T>({
   url,
   data,
   method = "GET",
   beforeRequest,
   afterRequest,
-}: HttpOption): Promise<Response> {
+}: HttpOption): Promise<Response<T>> {
   return http({
     url,
     method,
@@ -64,14 +64,14 @@ export function get({
   });
 }
 
-export function post({
+export function post<T>({
   url,
   data,
   method = "POST",
   headers,
   beforeRequest,
   afterRequest,
-}: HttpOption): Promise<Response> {
+}: HttpOption): Promise<Response<T>> {
   return http({
     url,
     method,

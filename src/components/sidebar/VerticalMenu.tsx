@@ -1,72 +1,50 @@
-import {
-  MailOutlined,
-  AppstoreOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-import { Menu, MenuProps } from "antd";
-import verticalMenuStyle from "./style/vertical-menu.module.less";
+import { Menu } from "antd";
 import { Scrollbars } from "react-custom-scrollbars";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SideBarFoldStatusComp, SideBarThemeComp } from "@/store/context";
-
-const items: MenuProps["items"] = [
-  {
-    label: "Navigation One",
-    key: "mail",
-    icon: <MailOutlined />,
-  },
-  {
-    label: "Navigation Two",
-    key: "app",
-    icon: <AppstoreOutlined />,
-  },
-  {
-    label: "Navigation Three - Submenu",
-    key: "SubMenu",
-    icon: <SettingOutlined />,
-    children: [
-      {
-        label: "Option 1",
-        key: "setting:1",
-      },
-      {
-        label: "Option 2",
-        key: "setting:2",
-      },
-      {
-        label: "Option 3",
-        key: "setting:3",
-      },
-      {
-        label: "Option 4",
-        key: "setting:4",
-      },
-    ],
-  },
-  {
-    label: (
-      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-        Navigation Four - Link
-      </a>
-    ),
-    icon: <AppstoreOutlined />,
-    key: "alipay",
-  },
-];
+import { PermissionContext } from "@/store/redux/permission";
+import { ItemType } from "antd/lib/menu/hooks/useItems";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function VerticalMenu() {
   const { foldStatus } = useContext(SideBarFoldStatusComp);
   const { theme } = useContext(SideBarThemeComp);
+  const { state } = useContext(PermissionContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const paths = location.pathname
+    .split("/")
+    .filter(Boolean)
+    .map((it) => "/" + it);
+  const defaultOpenKeys = paths.map((_, index) => {
+    return paths.slice(0, index + 1).join("");
+  });
+  const [openKeys, setOpenKeys] = useState(defaultOpenKeys);
+  function onMenuItemClick(item: ItemType) {
+    navigate(item!.key as string);
+  }
+  function onOpenChange(keys: string[]) {
+    setOpenKeys(keys);
+  }
+  useEffect(() => {
+    if (foldStatus) {
+      setOpenKeys([]);
+    } else {
+      setOpenKeys(defaultOpenKeys);
+    }
+  }, [foldStatus]);
   return (
-    <>
-      <Scrollbars style={{ flex: 1, overflowX: "hidden" }}>
-        <Menu
-          items={items}
-          mode="inline"
-          inlineCollapsed={foldStatus}
-          theme={theme}
-        />
-      </Scrollbars>
-    </>
+    <Scrollbars style={{ flex: 1, overflowX: "hidden" }}>
+      <Menu
+        items={state.menus}
+        mode="inline"
+        inlineCollapsed={foldStatus}
+        theme={theme}
+        onClick={onMenuItemClick}
+        onOpenChange={onOpenChange}
+        openKeys={foldStatus ? [] : openKeys}
+        defaultSelectedKeys={[location.pathname]}
+      />
+    </Scrollbars>
   );
 }

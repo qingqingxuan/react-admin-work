@@ -6,3 +6,11 @@ export interface OriginMenuType {
   parentPath: string;
   children: OriginMenuType[];
 }
+
+export interface UserInfoType {
+  userName: string;
+  nickName: string;
+  roleId: number;
+  userId: number;
+  token: string;
+}

@@ -1,15 +1,24 @@
 import { post } from "@/api/http";
 import { login } from "@/api/url";
-import { saveInfoAction, UserInfoContext } from "@/store/redux/user";
+import {
+  jumpLoginPageAction,
+  saveInfoAction,
+  UserInfoContext,
+} from "@/store/redux/user";
+import { UserInfoType } from "@/types";
 import { Button } from "antd";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./index.module.less";
+
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const { dispatch } = useContext(UserInfoContext);
+  useEffect(() => {
+    dispatch(jumpLoginPageAction());
+  }, []);
   async function onLogin() {
-    const result = await post({
+    const result = await post<UserInfoType>({
       url: login,
       data: {
         username: "admin",
@@ -28,7 +37,7 @@ const Login: React.FC = () => {
           isLogined: true,
         })
       );
-      navigate("/test", { replace: true });
+      navigate("/dashborad/home", { replace: true });
     }
   }
   return (

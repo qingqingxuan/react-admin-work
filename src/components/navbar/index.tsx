@@ -17,6 +17,7 @@ import {
 import { ItemType } from "antd/lib/menu/hooks/useItems";
 import { useNavigate } from "react-router-dom";
 import AppSetting from "../setting";
+import MyBreadcrumb from "../breadcrumb";
 
 const ToggleBar: React.FC = () => {
   const { foldStatus, setFoldStatus } = useContext(SideBarFoldStatusComp);
@@ -92,7 +93,7 @@ const UserInfo: React.FC = () => {
             cursor: "pointer",
           }}
         >
-          <Avatar size={24} icon={<UserOutlined />} />
+          <Avatar size={30} icon={<UserOutlined />} />
           <span style={{ marginLeft: "5px" }}>{userInfo.userName}</span>
         </div>
       </Dropdown>
@@ -107,6 +108,7 @@ export default function NavBar() {
       <Card bordered={false} bodyStyle={{ padding: 0 }}>
         <div className={navBarStyle["nav-bar-wrapper"]}>
           <ToggleBar />
+          <MyBreadcrumb />
           <div style={{ flex: 1 }}></div>
           <UserInfo />
           <Divider type="vertical" />

@@ -1,8 +1,17 @@
 import { RouteItemType } from "@/store/redux/permission";
 import { OriginMenuType } from "@/types";
-import { ComponentType, lazy, LazyExoticComponent, Suspense } from "react";
+import { MenuProps } from "antd";
+import { ItemType } from "antd/lib/menu/hooks/useItems";
+import React, {
+  ComponentType,
+  lazy,
+  LazyExoticComponent,
+  Suspense,
+} from "react";
 import Layout from "../Layout";
 import LazyLoading from "../lazy";
+import * as Icons from "@ant-design/icons";
+import { Navigate, Outlet } from "react-router-dom";
 
 const asyncLoadFile = import.meta.glob("/src/views/**/*.tsx");
 
@@ -23,13 +32,13 @@ export function lazyComponent(
     </Suspense>
   );
 }
+function isLayout(item: OriginMenuType) {
+  return (
+    item.children && Array.isArray(item.children) && item.children.length > 0
+  );
+}
 
 export function mapDataToRoutes(data: OriginMenuType[]) {
-  function isLayout(item: OriginMenuType) {
-    return (
-      item.children && Array.isArray(item.children) && item.children.length > 0
-    );
-  }
   const routes: RouteItemType[] = [];
   data.forEach((it) => {
     const layouted = isLayout(it);
@@ -42,7 +51,7 @@ export function mapDataToRoutes(data: OriginMenuType[]) {
       );
     }
     route.element = layouted ? (
-      <Layout />
+      <Outlet />
     ) : (
       lazyComponent(asyncComponents["/src/views" + it.menuUrl])
     );
@@ -54,4 +63,17 @@ export function mapDataToRoutes(data: OriginMenuType[]) {
   return routes;
 }
 
-export function mapDataToMenu() {}
+export function mapDataToMenu(data: OriginMenuType[]) {
+  const menus: MenuProps["items"] = [];
+  data.forEach((it) => {
+    const Icon = (Icons as Record<string, any>)[it.icon || "MenuOutlined"];
+    const menu: NonNullable<ItemType> = {
+      key: it.menuUrl,
+      label: it.menuName,
+      icon: <Icon />,
+      children: isLayout(it) ? mapDataToMenu(it.children) : undefined,
+    };
+    menus.push(menu);
+  });
+  return menus;
+}

@@ -8,4 +8,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  & > img{
+    width: 25px;
+    height: 25px;
+  }
+  .title{
+    margin-left: 10px;
+    transition: all 0.3s ease;
+  }
+  .fold-logo-title {
+    transform: scale(0);
+    width: 0;
+  }
+  .unfold-logo-title {
+    transform: scale(1);
+    width: auto;
+  }
 }

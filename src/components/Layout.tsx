@@ -19,7 +19,7 @@ export default function Layout() {
         <MainContent>
           <Header>
             <NavBar></NavBar>
-            <TabBar></TabBar>
+            {/* <TabBar></TabBar> */}
           </Header>
           <div>
             <Outlet></Outlet>

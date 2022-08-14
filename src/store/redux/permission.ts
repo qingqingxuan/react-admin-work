@@ -1,3 +1,4 @@
+import { MenuProps } from "antd";
 import React, { Dispatch } from "react";
 import { RouteObject } from "react-router-dom";
 
@@ -14,6 +15,7 @@ export interface IPermissionAction {
 export interface IPermissionState {
   isEmptyPermission: boolean;
   permissions: Array<RouteItemType>;
+  menus: MenuProps["items"];
 }
 
 export interface RouteItemType extends RouteObject {
@@ -23,6 +25,7 @@ export interface RouteItemType extends RouteObject {
 export const initPermissionState: IPermissionState = {
   isEmptyPermission: true,
   permissions: [],
+  menus: [],
 };
 
 export const initPermissionAction = (state: IPermissionState) => ({

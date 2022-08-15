@@ -5,13 +5,18 @@ type SideBarFoldStatusType = {
   setFoldStatus: (newStatus: boolean) => void;
 };
 
+export enum SideThemeType {
+  LIGHT = "light",
+  DARK = "dark",
+}
+
 type SideBarThemeType = {
-  theme: "light" | "dark";
-  setSideBarTheme: (theme: "light" | "dark") => void;
+  sidebarTheme: SideThemeType;
+  setSideBarTheme: (theme: SideThemeType) => void;
 };
 
 export const SideBarFoldStatusComp = createContext({} as SideBarFoldStatusType);
 
 export const SideBarThemeComp = createContext({
-  theme: "dark",
+  sidebarTheme: SideThemeType.DARK,
 } as SideBarThemeType);

@@ -2,16 +2,10 @@ import { RouteItemType } from "@/store/redux/permission";
 import { OriginMenuType } from "@/types";
 import { MenuProps } from "antd";
 import { ItemType } from "antd/lib/menu/hooks/useItems";
-import React, {
-  ComponentType,
-  lazy,
-  LazyExoticComponent,
-  Suspense,
-} from "react";
-import Layout from "../Layout";
+import { ComponentType, lazy, LazyExoticComponent, Suspense } from "react";
 import LazyLoading from "../lazy";
 import * as Icons from "@ant-design/icons";
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const asyncLoadFile = import.meta.glob("/src/views/**/*.tsx");
 
@@ -50,11 +44,7 @@ export function mapDataToRoutes(data: OriginMenuType[]) {
         `not found the path "${it.menuUrl}" for component, please to check 'src/views/' is included '${it.menuUrl}.tsx' file`
       );
     }
-    route.element = layouted ? (
-      <Outlet />
-    ) : (
-      lazyComponent(asyncComponents["/src/views" + it.menuUrl])
-    );
+    route.element = layouted ? <Outlet /> : lazyComponent(component);
     if (layouted) {
       route.children = mapDataToRoutes(it.children);
     }

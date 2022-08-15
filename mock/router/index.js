@@ -6,7 +6,7 @@ export const adminRoutes = [
     menuUrl: "/dashborad",
     menuName: "Dashborad",
     routeName: "dashborad",
-    icon: "DiffOutlined",
+    icon: "DashboardOutlined",
     parentPath: "",
     children: [
       {
@@ -28,7 +28,7 @@ export const adminRoutes = [
     menuUrl: "/next",
     menuName: "多级菜单",
     iconPrefix: "xicon",
-    icon: "DiffOutlined",
+    icon: "PartitionOutlined",
     parentPath: "",
     children: [
       {

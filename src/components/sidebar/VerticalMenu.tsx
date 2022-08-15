@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 export default function VerticalMenu() {
   const { foldStatus } = useContext(SideBarFoldStatusComp);
-  const { theme } = useContext(SideBarThemeComp);
+  const { sidebarTheme } = useContext(SideBarThemeComp);
   const { state } = useContext(PermissionContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,7 +39,7 @@ export default function VerticalMenu() {
         items={state.menus}
         mode="inline"
         inlineCollapsed={foldStatus}
-        theme={theme}
+        theme={sidebarTheme}
         onClick={onMenuItemClick}
         onOpenChange={onOpenChange}
         openKeys={foldStatus ? [] : openKeys}

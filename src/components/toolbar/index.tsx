@@ -1,10 +1,10 @@
 import { SideBarThemeComp, SideThemeType } from "@/store/context";
 import {
   FullscreenOutlined,
-  MessageOutlined,
+  BellOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Space } from "antd";
+import { Badge, Space } from "antd";
 import { useContext } from "react";
 import ToolbarStyle from "./index.module.less";
 
@@ -24,7 +24,9 @@ const Toolbar: React.FC = () => {
         onClick={onFullscreenClick}
       />
       <ReloadOutlined className={ToolbarStyle["icon-style"]} />
-      <MessageOutlined className={ToolbarStyle["icon-style"]} />
+      <Badge count={5}>
+        <BellOutlined className={ToolbarStyle["icon-style"]} />
+      </Badge>
     </Space>
   );
 };

@@ -1,3 +1,4 @@
+import { Card } from "antd";
 import { ReactNode } from "react";
 import headerBarStyle from "./index.module.less";
 

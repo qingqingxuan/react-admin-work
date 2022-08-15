@@ -11,6 +11,7 @@ import {
 } from "@/store/context";
 import { useContext, useState } from "react";
 import { UserInfoContext } from "@/store/redux/user";
+import PageIntro from "./PageIntro";
 
 export default function Layout() {
   const [foldStatus, setFoldStatus] = useState(false);
@@ -24,8 +25,8 @@ export default function Layout() {
           <MainContent>
             <Header>
               <NavBar></NavBar>
-              {/* <TabBar></TabBar> */}
             </Header>
+            <PageIntro />
             <div>
               <Outlet></Outlet>
             </div>

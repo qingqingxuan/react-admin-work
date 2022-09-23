@@ -9,7 +9,7 @@ import {
   SideBarThemeComp,
   SideThemeType,
 } from "@/store/context";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserInfoContext } from "@/store/redux/user";
 import PageIntro from "./PageIntro";
 

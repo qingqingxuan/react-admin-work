@@ -1,27 +1,17 @@
 import { useReducer } from "react";
-import {
-  BrowserRouter,
-  Navigate,
-  Route,
-  Routes,
-  useRoutes,
-} from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.less";
 import Auth from "./components/Auth";
-import Layout from "./components/Layout";
 import {
   initPermissionState,
   PermissionContext,
   permissionReducer,
-  RouteItemType,
 } from "./store/redux/permission";
 import {
   initUserInfo,
   UserInfoContext,
   userInfoReducer,
 } from "./store/redux/user";
-import Home from "./views/dashborad/home";
-import WorkPlace from "./views/dashborad/work-place";
 import Login from "./views/login";
 
 function App() {

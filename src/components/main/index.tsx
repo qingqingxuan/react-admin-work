@@ -1,5 +1,5 @@
+import { AppSettingContext } from "@/store/app-setting";
 import { ReactNode, useContext } from "react";
-import { SideBarFoldStatusComp } from "../../store/context";
 import mainStyle from "./index.module.less";
 
 interface MainPropsType {
@@ -7,12 +7,14 @@ interface MainPropsType {
 }
 
 export default function MainContent({ children }: MainPropsType) {
-  const { foldStatus } = useContext(SideBarFoldStatusComp);
+  const { state } = useContext(AppSettingContext);
   return (
     <div
       className={[
         mainStyle["main-wrapper"],
-        foldStatus ? mainStyle["fold-status"] : mainStyle["unfold-status"],
+        state.sideBarFoldedStatus
+          ? mainStyle["fold-status"]
+          : mainStyle["unfold-status"],
       ].join(" ")}
     >
       {children}

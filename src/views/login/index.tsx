@@ -4,7 +4,7 @@ import {
   jumpLoginPageAction,
   saveInfoAction,
   UserInfoContext,
-} from "@/store/redux/user";
+} from "@/store/user";
 import { UserInfoType } from "@/types";
 import { Button } from "antd";
 import { useContext, useEffect } from "react";

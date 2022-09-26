@@ -1,4 +1,4 @@
-import { RouteItemType } from "@/store/redux/permission";
+import { RouteItemType } from "@/store/permission";
 import { OriginMenuType } from "@/types";
 import { MenuProps } from "antd";
 import { ItemType } from "antd/lib/menu/hooks/useItems";

@@ -4,8 +4,8 @@ import {
   initPermissionAction,
   PermissionContext,
   RouteItemType,
-} from "@/store/redux/permission";
-import { UserInfoContext } from "@/store/redux/user";
+} from "@/store/permission";
+import { UserInfoContext } from "@/store/user";
 import { OriginMenuType } from "@/types";
 import NoFountPage from "@/views/404";
 import React, { useEffect, useContext, useState } from "react";

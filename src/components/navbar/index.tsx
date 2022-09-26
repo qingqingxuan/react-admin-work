@@ -9,25 +9,25 @@ import {
 import { Avatar, Card, Divider, Dropdown, Menu, MenuProps, Modal } from "antd";
 import React, { useContext, useState } from "react";
 import { SideBarFoldStatusComp } from "../../store/context";
-import {
-  IUserInfoAction,
-  logoutAction,
-  UserInfoContext,
-} from "@/store/redux/user";
+import { IUserInfoAction, logoutAction, UserInfoContext } from "@/store/user";
 import { ItemType } from "antd/lib/menu/hooks/useItems";
 import { useNavigate } from "react-router-dom";
 import AppSetting from "../setting";
 import MyBreadcrumb from "../breadcrumb";
 import Toolbar from "../toolbar";
+import { AppSettingContext, TOGGLE_SIDE_BAR_STATUS } from "@/store/app-setting";
 
 const ToggleBar: React.FC = () => {
-  const { foldStatus, setFoldStatus } = useContext(SideBarFoldStatusComp);
+  const { state, dispatch } = useContext(AppSettingContext);
   function onMenuClick() {
-    setFoldStatus(!foldStatus);
+    dispatch({
+      type: TOGGLE_SIDE_BAR_STATUS,
+      payload: { sideBarFoldedStatus: !state.sideBarFoldedStatus },
+    });
   }
   return (
     <>
-      {foldStatus ? (
+      {!state.sideBarFoldedStatus ? (
         <MenuFoldOutlined
           onClick={onMenuClick}
           style={{ fontSize: "16px", cursor: "pointer" }}

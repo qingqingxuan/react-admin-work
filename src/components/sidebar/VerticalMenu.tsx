@@ -1,14 +1,13 @@
 import { Menu } from "antd";
 import { Scrollbars } from "react-custom-scrollbars";
 import { useContext, useEffect, useState } from "react";
-import { SideBarFoldStatusComp, SideBarThemeComp } from "@/store/context";
-import { PermissionContext } from "@/store/redux/permission";
+import { PermissionContext } from "@/store/permission";
 import { ItemType } from "antd/lib/menu/hooks/useItems";
 import { useLocation, useNavigate } from "react-router-dom";
+import { AppSettingContext } from "@/store/app-setting";
 
 export default function VerticalMenu() {
-  const { foldStatus } = useContext(SideBarFoldStatusComp);
-  const { sidebarTheme } = useContext(SideBarThemeComp);
+  const { state: appSettingState } = useContext(AppSettingContext);
   const { state } = useContext(PermissionContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,22 +26,22 @@ export default function VerticalMenu() {
     setOpenKeys(keys);
   }
   useEffect(() => {
-    if (foldStatus) {
+    if (appSettingState.sideBarFoldedStatus) {
       setOpenKeys([]);
     } else {
       setOpenKeys(defaultOpenKeys);
     }
-  }, [foldStatus]);
+  }, [appSettingState.sideBarFoldedStatus]);
   return (
     <Scrollbars style={{ flex: 1, overflowX: "hidden" }}>
       <Menu
         items={state.menus}
         mode="inline"
-        inlineCollapsed={foldStatus}
-        theme={sidebarTheme}
+        inlineCollapsed={appSettingState.sideBarFoldedStatus}
+        theme={appSettingState.sideBarThemeType}
         onClick={onMenuItemClick}
         onOpenChange={onOpenChange}
-        openKeys={foldStatus ? [] : openKeys}
+        openKeys={appSettingState.sideBarFoldedStatus ? [] : openKeys}
         defaultSelectedKeys={[location.pathname]}
       />
     </Scrollbars>

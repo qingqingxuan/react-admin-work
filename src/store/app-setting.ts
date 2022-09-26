@@ -12,7 +12,7 @@ export interface AppSettingState {
 
 export interface AppSettingAction {
   type: string;
-  payload: AppSettingState;
+  payload: Partial<AppSettingState>;
 }
 
 export interface IAppSettingContext {
@@ -20,15 +20,33 @@ export interface IAppSettingContext {
   dispatch: Dispatch<AppSettingAction>;
 }
 
+export const TOGGLE_SIDE_BAR_STATUS = "toggle-side-bar-status";
+export const TOGGLE_SIDE_BAR_THEME_STATUS = "toggle-side-bar-theme-status";
+
 export function appSettingReducer(
   state: AppSettingState,
   action: AppSettingAction
-) {}
+) {
+  switch (action.type) {
+    case TOGGLE_SIDE_BAR_STATUS:
+    case TOGGLE_SIDE_BAR_THEME_STATUS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    default:
+      return {
+        ...state,
+      };
+  }
+}
+
+export const initAppSettingState: AppSettingState = {
+  sideBarThemeType: SideBarThemeType.DARK,
+  sideBarFoldedStatus: false,
+};
 
 export const AppSettingContext = React.createContext<IAppSettingContext>({
-  state: {
-    sideBarThemeType: SideBarThemeType.DARK,
-    sideBarFoldedStatus: false,
-  },
+  state: initAppSettingState,
   dispatch: () => {},
 });

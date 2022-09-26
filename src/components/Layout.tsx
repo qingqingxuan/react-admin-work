@@ -4,36 +4,25 @@ import layoutStyle from "./Layout.module.less";
 import MainContent from "./main";
 import NavBar from "./navbar";
 import Header from "./header";
-import {
-  SideBarFoldStatusComp,
-  SideBarThemeComp,
-  SideThemeType,
-} from "@/store/context";
-import { useContext, useEffect, useState } from "react";
-import { UserInfoContext } from "@/store/redux/user";
+import { useContext } from "react";
+import { UserInfoContext } from "@/store/user";
 import PageIntro from "./PageIntro";
 
 export default function Layout() {
-  const [foldStatus, setFoldStatus] = useState(false);
-  const [sidebarTheme, setSideBarTheme] = useState(SideThemeType.DARK);
   const { userInfo } = useContext(UserInfoContext);
   return userInfo.isLogined ? (
-    <SideBarFoldStatusComp.Provider value={{ foldStatus, setFoldStatus }}>
-      <SideBarThemeComp.Provider value={{ sidebarTheme, setSideBarTheme }}>
-        <div className={layoutStyle["layout-wrapper"]}>
-          <SideBar></SideBar>
-          <MainContent>
-            <Header>
-              <NavBar></NavBar>
-            </Header>
-            <PageIntro />
-            <div>
-              <Outlet></Outlet>
-            </div>
-          </MainContent>
+    <div className={layoutStyle["layout-wrapper"]}>
+      <SideBar></SideBar>
+      <MainContent>
+        <Header>
+          <NavBar></NavBar>
+        </Header>
+        <PageIntro />
+        <div>
+          <Outlet></Outlet>
         </div>
-      </SideBarThemeComp.Provider>
-    </SideBarFoldStatusComp.Provider>
+      </MainContent>
+    </div>
   ) : (
     <Navigate to={"/login"}></Navigate>
   );

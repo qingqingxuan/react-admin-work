@@ -42,7 +42,7 @@ export function appSettingReducer(
 }
 
 export const initAppSettingState: AppSettingState = {
-  sideBarThemeType: SideBarThemeType.DARK,
+  sideBarThemeType: SideBarThemeType.LIGHT,
   sideBarFoldedStatus: false,
 };
 
